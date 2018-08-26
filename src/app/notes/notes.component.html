@@ -1,0 +1,72 @@
+<div class="container">
+
+
+    <h3 style="margin:20px 0 20px 0">Notes in local storage</h3>
+
+    <div class="row" style="margin-bottom: 10px">
+        <button (click)="actionNote('create')" class="btn btn-primary" style="margin-right: 10px">Add New Note</button>
+        <button (click)="removeAll()" class="btn btn-outline-danger">Clear All Notes</button>
+
+    </div>
+    <div class="row">
+        <table class="table table-hover table-borderless table-striped">
+            <thead class="thead-light">
+            <tr class="d-flex">
+                <th class="col-1" scope="col">Id</th>
+                <th class="col-2" scope="col">Date</th>
+                <th class="col-6" scope="col">Title</th>
+                <th class="col-3" scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngIf="!notes" class="text-center">
+                <td colspan="4">Add a few notes to start</td>
+            </tr>
+            <tr class="d-flex" *ngFor="let note of notes; let i = index">
+                <td class="col-1">{{note.id}}</td>
+                <td class="col-2">{{note.date}}</td>
+                <td class="col-6">{{note.title}}</td>
+                <td class="col-3">
+                    <button style="margin-right: 10px" type="button" class="btn btn-outline-info"
+                            (click)="actionNote('view', note, i)">View
+                    </button>
+                    <button style="margin-right: 10px" type="button" class="btn btn-outline-secondary"
+                            (click)="actionNote('update', note, i)">Edit
+                    </button>
+                    <button type="button" (click)="deleteNote(note)" class="btn btn-outline-warning">Delete</button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modalHeaderText" class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 id="noteTitle"></h4>
+                <hr>
+                <h6 id="noteDescription" style="white-space: pre-line"></h6>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="deleteOneType" type="button" class="btn btn-danger" (click)="deleteNoteConfirm()"
+                        data-dismiss="modal">Delete
+                </button>
+                <button *ngIf="removeAllType" type="button" class="btn btn-danger" (click)="removeAllConfirm()"
+                        data-dismiss="modal">Remove All
+                </button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
